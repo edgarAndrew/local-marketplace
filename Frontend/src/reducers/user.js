@@ -2,10 +2,23 @@ import {createReducer} from "@reduxjs/toolkit"
 
 const initialState = {
     isAuthenticated:false,
+    profile:null
 }
 export const userReducer = createReducer(initialState,{
     
     // dispatch types or cases for reducer
+    ProfileRequest: (state,action)=>{
+        state.loading = true;
+    },
+    ProfileSuccess: (state,action)=>{
+        state.loading = false;
+        state.profile = action.payload;
+    },
+    ProfileFailure: (state,action)=>{
+          state.loading = false;     
+          state.error = action.payload
+    },
+
     LoginRequest: (state,action)=>{
         state.loading = true;
     },

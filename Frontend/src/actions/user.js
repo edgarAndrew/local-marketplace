@@ -1,6 +1,25 @@
 import axios from "axios"
 import '../axios'
 
+export const getProfile = ()=>async(dispatch)=>{
+    try {
+        dispatch({
+            type:"ProfileRequest"
+        })
+        const {data} = await axios.get("/api/user-data/")
+        dispatch({
+            type:"ProfileSuccess",
+            payload:data
+        })
+    } catch (error) {
+        console.log(error.response.data,error.response.status)
+        dispatch({
+            type:"ProfileFailure",
+            payload:error.response.data
+        })
+    }    
+}
+
 export const login = (email,password)=>async(dispatch)=>{
     try {
         dispatch({
