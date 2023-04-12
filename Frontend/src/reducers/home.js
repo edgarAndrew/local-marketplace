@@ -18,6 +18,17 @@ export const homeReducer = createReducer(initialState,{
           state.loading = false;     
           state.error = action.payload
     },
+    ProductsRequest: (state,action)=>{
+        state.loading = true;
+    },
+    ProductsSuccess: (state,action)=>{
+        state.loading = false;
+        state.products = action.payload;
+    },
+    ProductsFailure: (state,action)=>{
+          state.loading = false;     
+          state.error = action.payload
+    },
     clearErrors:(state,action)=>{
         state.error = null
         state.message = null

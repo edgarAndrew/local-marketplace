@@ -19,3 +19,21 @@ export const getCategories = ()=>async(dispatch)=>{
         })
     }    
 }
+export const getProducts = ()=>async(dispatch)=>{
+    try {
+        dispatch({
+            type:"ProductsRequest"
+        })
+        const {data} = await axios.get("/api/get-products/")
+        dispatch({
+            type:"ProductsSuccess",
+            payload:data
+        })
+    } catch (error) {
+        console.log(error.response.data,error.response.status)
+        dispatch({
+            type:"ProductsFailure",
+            payload:error.response.data
+        })
+    }    
+}
