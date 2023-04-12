@@ -25,7 +25,7 @@ class emailSerializer(serializers.Serializer):
 class CustomerNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
-        fields = ["name", "profile_pic", "profile_pic_url"]
+        fields = ["name", "profile_pic", "profile_pic_url", "phone"]
 
 class CustomerDetailsSerializer(serializers.ModelSerializer):
     class Meta:

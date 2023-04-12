@@ -2,6 +2,9 @@ from django.db import models
 from base.models import BaseUser
 
 
+LOCATIONS = (("MARGAO","MARGAO"), ("PANJIM","PANJIM"), ("MARGAO","MARGAO"),("MARGAO","MARGAO"), ("MARGAO","MARGAO"), ("MARGAO","MARGAO"))
+
+
 class UserModel(BaseUser):
     profile_pic = models.ImageField(upload_to="profile", height_field=None, width_field=None, max_length=None, null=True, blank=True)
     profile_pic_url = models.URLField(max_length=200, null=True, blank=True)
