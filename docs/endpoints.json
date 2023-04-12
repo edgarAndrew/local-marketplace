@@ -1,0 +1,577 @@
+{
+	"info": {
+		"_postman_id": "96b5ad13-cc49-42b3-a1c1-91c725017c42",
+		"name": "RIT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24371525"
+	},
+	"item": [
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "Signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()\r",
+									"pm.globals.set(\"accessToken\",jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Atharva",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "patharv777@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "profile_pic",
+									"type": "file",
+									"src": "/Users/atharvparkhe/Downloads/3.jpeg"
+								},
+								{
+									"key": "phone",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/signup/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"signup",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()\r",
+									"pm.globals.set(\"accessToken\",jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"edgarcamelo03@aol.com\",\n    \"password\":\"test123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/login/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forget",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"patharv777@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/forgot/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"forgot",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"otp\": 123456,\n    \"pw\": \"Pass@321\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/reset/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"reset",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Google Auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()\r",
+									"pm.globals.set(\"userAccessToken\",jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token_id\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6IjI1NWNjYTZlYzI4MTA2MDJkODBiZWM4OWU0NTZjNDQ5NWQ3NDE4YmIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiODMwNzYyMjcyMjYxLTRyZjZkcjEwdTE5bGltamJkcnQ4dWYyYms1a29qYmVqLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiODMwNzYyMjcyMjYxLTRyZjZkcjEwdTE5bGltamJkcnQ4dWYyYms1a29qYmVqLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEzMzY0NDY2NjEwNDgxNzMyODA3IiwiZW1haWwiOiJmZWxlY2lkYWRlMTk5N0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImU1NWdlN25FVTRPX0todmdZUnZGYWciLCJuYW1lIjoiZmVsZWNpZGFkZSBEZXNvdXphIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FHTm15eGJRWEdXYlhyUjBYTzFkMkRLcXdUVmtMVnQ1QzIxUkVoMTBfdVV4PXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6ImZlbGVjaWRhZGUiLCJmYW1pbHlfbmFtZSI6IkRlc291emEiLCJsb2NhbGUiOiJlbiIsImlhdCI6MTY3ODAwMjUwMSwiZXhwIjoxNjc4MDA2MTAxLCJqdGkiOiI1MjhhMzlmYjQzYjZlODVhNmQyM2Q2YTNmZjUyYmQxNmNhNDBmODI4In0.DNsfyShkzpKdSLzsYhAen3J7uLUVq9tlbpSpoNEw1Rm2nuOINkMsMQJrG_7nFKDJ_bhAqknjoPj7uICGJHKcMouu6_e9A9DDyqIZ4fl4jPkiRa9qzfpDY5ywGCVFcIEZJp5da3tso8vocAW3EF2ztPjWhEuBODNjRUPVCu1soAEPxcl0G5HANAYWStFyzDHdposs-fM3GICis6wh1Qk4QaRm2pDcWz-f5Yowov62w5N-RnWLzUVUW5p2lJ8HM-YF8He8rMhc234dTeXNu7K7WsqMgRQBNdvyH-xmfjYPOt50B5FlbNyiJ4idvUr4IZ3xpEbcFy6e-LFAATYjsR6qTQ\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/google-auth/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"google-auth",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify JWT",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImI0OWM1MDYyZDg5MGY1Y2U0NDllODkwYzg4ZThkZDk4YzRmZWUwYWIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiODMwNzYyMjcyMjYxLTRyZjZkcjEwdTE5bGltamJkcnQ4dWYyYms1a29qYmVqLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiODMwNzYyMjcyMjYxLTRyZjZkcjEwdTE5bGltamJkcnQ4dWYyYms1a29qYmVqLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE3MzE4NTQzNzc0Njk4NDIxMDEyIiwiZW1haWwiOiJlZGdhcmNhbWVsbzY5QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoia3JJRGQ2ZGRDVFVWZ1hTcFNjbDBxQSIsIm5hbWUiOiJFZGdhciBDYW1lbG8iLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUVkRlRwNUxyc2hRYmJBWU44UDVfdkU1YUFndTY2UE55ZDNiTFpKUzk4SXY9czk2LWMiLCJnaXZlbl9uYW1lIjoiRWRnYXIiLCJmYW1pbHlfbmFtZSI6IkNhbWVsbyIsImxvY2FsZSI6ImVuIiwiaWF0IjoxNjc2MzE3NTk3LCJleHAiOjE2NzYzMjExOTcsImp0aSI6IjQ5NDllMGVmNTMzOTc2Yzg5NzllOTJhMzliNjg5NzM3ZmIzMDQyZDQifQ.XLLmTrr6lBiofgcv8l8S0ZzJ3StiORXBEewEEYF73jKPrEibEN3sgSfed5oP21zqDO1z0l8N-oY7FHhGzQZMvnvXYoG7WiGk1H4Na2DEA1fN7om0wWKLVa4kAx30LH_KEE4yJSqzx-V8Gip6jY_sOwD1A80CGm0UOxeEPFGyZuEuvAMtuSOHYHFwVbAsoUNU2z8s0c-QLkHIzu-PqsvZrya0dIzuVaBVkAhnv2rAxPyYjG4BnLx4dwAiXEnApHYEe2hO92eUL5QtrUznRICBsTTV8V7RDxTzIyb-81iGlQQpJfLB5-9ZuFCBVgoZLbLLJ3-wANt56-EYAiAWPfwnRQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/verify-jwt/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"verify-jwt",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user-data/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user-data",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Main",
+			"item": [
+				{
+					"name": "Product Images",
+					"item": [
+						{
+							"name": "Add Product Image",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgxMzAyMzYzLCJpYXQiOjE2ODEyOTUxNjMsImp0aSI6IjU1ZDlhMjllMjE1ZDQzYTFhM2IyNjI2MWYxNWNhMTRjIiwidXNlcl9pZCI6ImFkOWY4NThlLTUzNDgtNGRkYS1hZjI1LTcxY2JmZTU1OWMzZCJ9.7P_nfeKekZOzUNTM2NgJ8YzxtBk5soRfUVobo3av-gc",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/Users/atharvparkhe/Downloads/property.jpeg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/add-product-image/be076a35-9295-4b58-84e7-8f0e7d1b2236/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"add-product-image",
+										"be076a35-9295-4b58-84e7-8f0e7d1b2236",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product Image",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgxMzAyMzYzLCJpYXQiOjE2ODEyOTUxNjMsImp0aSI6IjU1ZDlhMjllMjE1ZDQzYTFhM2IyNjI2MWYxNWNhMTRjIiwidXNlcl9pZCI6ImFkOWY4NThlLTUzNDgtNGRkYS1hZjI1LTcxY2JmZTU1OWMzZCJ9.7P_nfeKekZOzUNTM2NgJ8YzxtBk5soRfUVobo3av-gc",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/Users/atharvparkhe/Downloads/property.jpeg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/delete-product-image/82909e3c-9ad7-4bdf-a6b0-a2a44b8a40bc/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"delete-product-image",
+										"82909e3c-9ad7-4bdf-a6b0-a2a44b8a40bc",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get Catrgories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/get-categories/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"get-categories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/get-products/?location_filter=MARGAO",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"get-products",
+								""
+							],
+							"query": [
+								{
+									"key": "search_product",
+									"value": "mobile",
+									"disabled": true
+								},
+								{
+									"key": "category_filter",
+									"value": "b9367b0f-44ff-40d7-88a7-6f944fb037a5",
+									"disabled": true
+								},
+								{
+									"key": "location_filter",
+									"value": "MARGAO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/single-products/be076a35-9295-4b58-84e7-8f0e7d1b2236/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"single-products",
+								"be076a35-9295-4b58-84e7-8f0e7d1b2236",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgxMzAyMzYzLCJpYXQiOjE2ODEyOTUxNjMsImp0aSI6IjU1ZDlhMjllMjE1ZDQzYTFhM2IyNjI2MWYxNWNhMTRjIiwidXNlcl9pZCI6ImFkOWY4NThlLTUzNDgtNGRkYS1hZjI1LTcxY2JmZTU1OWMzZCJ9.7P_nfeKekZOzUNTM2NgJ8YzxtBk5soRfUVobo3av-gc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "img",
+									"type": "file",
+									"src": "/Users/atharvparkhe/Downloads/3.jpeg"
+								},
+								{
+									"key": "title",
+									"value": "Power Bank",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "This is a nice power bank",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "b9367b0f-44ff-40d7-88a7-6f944fb037a5",
+									"type": "text"
+								},
+								{
+									"key": "date_of_purchase",
+									"value": "2018-05-12",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/add-product/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"add-product",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ad is Sold",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgxMzAyMzYzLCJpYXQiOjE2ODEyOTUxNjMsImp0aSI6IjU1ZDlhMjllMjE1ZDQzYTFhM2IyNjI2MWYxNWNhMTRjIiwidXNlcl9pZCI6ImFkOWY4NThlLTUzNDgtNGRkYS1hZjI1LTcxY2JmZTU1OWMzZCJ9.7P_nfeKekZOzUNTM2NgJ8YzxtBk5soRfUVobo3av-gc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/atharvparkhe/Downloads/property.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/delete-ad/be076a35-9295-4b58-84e7-8f0e7d1b2236/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"delete-ad",
+								"be076a35-9295-4b58-84e7-8f0e7d1b2236",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Others",
+			"item": [
+				{
+					"name": "Contact Us",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"larry\",\n    \"email\":\"edgarcamelo03@gmail.com\",\n    \"message\":\"Yo hows it hanging\",\n    \"phone\":123456789\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/contact/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"contact",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://192.168.103.120:8000"
+		}
+	]
+}
