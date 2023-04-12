@@ -27,6 +27,17 @@ export const homeReducer = createReducer(initialState,{
           state.loading = false;     
           state.error = action.payload
     },
+    FilterRequest: (state,action)=>{
+        state.loading = true;
+    },
+    FilterSuccess: (state,action)=>{
+        state.loading = false;
+        state.products = action.payload;
+    },
+    FilterFailure: (state,action)=>{
+          state.loading = false;     
+          state.error = action.payload
+    },
     clearErrors:(state,action)=>{
         state.error = null
         state.message = null

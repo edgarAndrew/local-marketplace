@@ -1,22 +1,28 @@
-import { Box, Container, Paper, Avatar } from "@mui/material";
+import { Box, Container, Paper, Avatar,Button } from "@mui/material";
 import ItemCard from "../UI/Card";
 import classes from "./home.module.css";
 import { Typography, Backdrop, CircularProgress } from "@mui/material";
 import { useEffect } from "react";
-import { getCategories, getProducts } from "../../actions/home";
+import { getCategories, getProducts,filter } from "../../actions/home";
 import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
   const dispatch = useDispatch();
+  
   useSelector((state) => state.home);
 
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getProducts());
   }, []);
+  
   const { loading, error, categories, products } = useSelector(
     (state) => state.home
   );
+  
+  const searchHandler = (id) =>{
+    dispatch(filter(id))
+  }
 
   if (loading)
     return (
@@ -40,14 +46,16 @@ const Home = () => {
           </Typography>
           <Box className={classes.categories}>
             {categories.map((cat) => (
-              <Paper
-                elevation={0}
-                variant="outlined"
-                className={classes.catCard}
-              >
-                <Avatar alt="Remy Sharp" src={cat.img} variant="sqaure" />
-                <Typography>{cat.name}</Typography>
-              </Paper>
+              <Button onClick={()=>searchHandler(cat.id)}>
+                  <Paper
+                    elevation={0}
+                    variant="outlined"
+                    className={classes.catCard}
+                  >
+                    <Avatar alt="Remy Sharp" src={cat.img} variant="sqaure" />
+                    <Typography>{cat.name}</Typography>
+                  </Paper>
+              </Button>
             ))}
           </Box>
 
