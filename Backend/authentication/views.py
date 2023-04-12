@@ -1,5 +1,6 @@
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import ListAPIView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
@@ -33,6 +34,7 @@ def google_authentication(request):
             return Response({"message":"Login successfull", "token":str(jwt_token.access_token)}, status=status.HTTP_202_ACCEPTED)
         return Response({"error":ser.errors}, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
+        print(e)
         return Response({"message": "Invalid or Expired toiken"}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
@@ -40,7 +42,7 @@ def google_authentication(request):
 @permission_classes([IsAuthenticated])
 def verify_jwt(request):
     try:
-        if SellerModel.objects.filter(email = request.user.email).exists():
+        if UserModel.objects.filter(email = request.user.email).exists():
             return Response({"valid": True}, status=status.HTTP_200_OK)
         return Response({"valid": False}, status=status.HTTP_401_UNAUTHORIZED)
     except Exception as e:
@@ -51,21 +53,11 @@ def verify_jwt(request):
 def signUp(request):
     try:
         data = request.data
-        serializer = signupSerializer(data=data)
+        serializer = testserializer(data=data)
         if serializer.is_valid():
-            name = serializer.data["name"]
-            email = serializer.data["email"]
-            phone = serializer.data["phone"]
-            password = serializer.data["password"]
-            if UserModel.objects.filter(email=email).first():
-                return Response({"message":"Acount already exists."}, status=status.HTTP_406_NOT_ACCEPTABLE)
-            new_customer = UserModel.objects.create(
-                email = email,
-                name = name,
-                phone = phone,
-                auth_provider = "email"
-            )
-            new_customer.set_password(password)
+            serializer.save()
+            new_customer = UserModel.objects.get(email = serializer.validated_data["email"])
+            new_customer.set_password(serializer.validated_data["password"])
             new_customer.save()
             return Response({"message":"Account created"}, status=status.HTTP_201_CREATED)
         return Response({"error":serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
@@ -134,3 +126,35 @@ def reset(request):
     except Exception as e:
         return Response({"error":str(e), "message":"Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+@api_view(["POST"])
+def verify(request):
+    try:
+        data = request.data
+        serializer = otpSerializer(data=data)
+        if serializer.is_valid():
+            otp = serializer.data["otp"]
+            if not cache.get(otp):
+                return Response({"message":"OTP expired"}, status=status.HTTP_408_REQUEST_TIMEOUT)
+            user_obj = UserModel.objects.filter(email=cache.get(otp)).first()
+            if user_obj:
+                if user_obj.is_verified:
+                    return Response({"message":"Account is already verified"}, status=status.HTTP_412_PRECONDITION_FAILED)
+                user_obj.is_verified = True
+                user_obj.save()
+                cache.delete(otp)
+                return Response({"message":"Account verification successfull"}, status=status.HTTP_202_ACCEPTED)
+            return Response({"message":"User does not exist."}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"error":serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return Response({"error":str(e), "message":"Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@permission_classes([IsAuthenticated])
+@api_view(["GET"])
+def get_user_data(request):
+    try:
+        user = UserModel.objects.get(email=request.user.email)
+        ser = CustomerNameSerializer(user)
+        return Response(ser.data, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"error":str(e), "message":"Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

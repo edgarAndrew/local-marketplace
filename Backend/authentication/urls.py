@@ -11,5 +11,6 @@ urlpatterns = [
 	path('forgot/', views.forgot, name="forgot"),
 	path('reset/', views.reset, name="reset"),
 	path('verify-jwt/', views.verify_jwt, name="verify-jwt"),
+	path('user-data/', views.get_user_data, name="user-data"),
 
 ]

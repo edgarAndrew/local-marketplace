@@ -15,9 +15,7 @@ class BaseModel(models.Model):
 
 class BaseUser(AbstractBaseUser, PermissionsMixin, BaseModel):
     email = models.EmailField(max_length=100, unique=True)
-    name = models.CharField(max_length=100, validators=[validate_name])
-    phone = models.CharField(max_length=13, null=True, blank=True)
-    is_verified = models.BooleanField(default=False)
+    name = models.CharField(max_length=100)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

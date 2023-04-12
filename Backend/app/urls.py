@@ -4,5 +4,6 @@ from .views import *
 
 
 urlpatterns = [
-    
+    # path('contact/', views.ContactUs.as_view(), name="contact"),
 ]
+

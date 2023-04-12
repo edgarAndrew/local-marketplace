@@ -9,10 +9,6 @@ class loginSerializer(serializers.Serializer):
     email = serializers.EmailField(required = True)
     password = serializers.CharField(required = True)
 
-class ChangePasswordSerializer(serializers.Serializer):
-    old = serializers.CharField(required = True)
-    new = serializers.CharField(required = True)
-
 class signupSerializer(serializers.Serializer):
     name = serializers.CharField(required = True)
     email = serializers.EmailField(required = True)
@@ -29,7 +25,7 @@ class emailSerializer(serializers.Serializer):
 class CustomerNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
-        fields = ["name", "profile_pic"]
+        fields = ["name", "profile_pic", "profile_pic_url"]
 
 class CustomerDetailsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -48,3 +44,9 @@ class GoogleSocialAuthSerializer(serializers.Serializer):
             return token_id
         except Exception as e:
             print(e)
+
+
+class testserializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserModel
+        fields = ["name", "phone", "email", "password", "profile_pic"]

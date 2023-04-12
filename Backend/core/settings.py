@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     'authentication.apps.AuthenticationConfig',
     'app.apps.AppConfig',
-    # 'articles.apps.ArticlesConfig',
 ]
 
 MIDDLEWARE = [
@@ -44,13 +43,14 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'core.urls'
 
 TEMPLATES_DIRS = [
-    os.path.join(BASE_DIR, "templates"),
+    os.path.join(BASE_DIR, "templates")
 ]
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': TEMPLATES_DIRS,
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -66,23 +66,13 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 AUTH_USER_MODEL = 'base.BaseUser'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': config("DB_NAME"),
-#         'USER': config("DB_USER"),
-#         'PASSWORD': config("DB_PASSWORD"),
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -179,4 +169,5 @@ GOOGLE_CLIENT_SECRET = str(config("GOOGLE_CLIENT_SECRET"))
 SOCIAL_SECRET = str(config("SOCIAL_SECRET"))
 
 # Utils
-FRONTEND_URL = "http://localhost:5173"
+FRONTEND_URL = str(config("FRONTEND_URL"))
+ADMIN_EMAIL = str(config("ADMIN_EMAIL"))
