@@ -37,7 +37,7 @@ const Register = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(register(name, email, password, file,phone));
-    //navigate('/')
+    navigate('/')
   };
 
   useEffect(() => {

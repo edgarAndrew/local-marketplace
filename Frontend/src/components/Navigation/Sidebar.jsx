@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import {logout} from '../../actions/user'
 import classes from "./sidebar.module.css";
 import { NavLink } from "react-router-dom";
 import {
@@ -10,13 +11,17 @@ import {
 } from "@mui/icons-material";
 import { Typography, IconButton, Button } from "@mui/material";
 import { MenuContext } from "react-flexible-sliding-menu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = () => {
   const { loading, isAuthenticated } = useSelector((state) => state.user);
-
+  const dispatch = useDispatch()
   const [tab, setTab] = useState(window.location.pathname);
   const { toggleMenu } = useContext(MenuContext);
+
+  const logoutHandler = () =>{
+    dispatch(logout())
+  }
 
   return (
     <div className={classes.sidebar}>
@@ -73,7 +78,7 @@ const Sidebar = () => {
         )}
 
         {isAuthenticated && (
-          <Button component={NavLink} to="/">
+          <Button component={NavLink} onClick={logoutHandler} to="/">
             logout
           </Button>
         )}

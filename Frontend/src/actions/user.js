@@ -104,3 +104,13 @@ export const loadSeller = ()=>async(dispatch)=>{
         })
     }    
 }
+export const logout = ()=>async(dispatch)=>{
+    dispatch({
+        type:"LogoutUserRequest"
+    })
+    localStorage.removeItem("user"); 
+    dispatch({
+        type:"LogoutUserSuccess",
+        payload:"User Logged Out"
+    })
+}

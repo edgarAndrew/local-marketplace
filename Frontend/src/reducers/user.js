@@ -77,7 +77,7 @@ export const userReducer = createReducer(initialState,{
     },
     LogoutUserSuccess: (state,action)=>{
         state.loading = false
-        state.user = null
+        state.message = action.payload
         state.isAuthenticated = false;
     },
     LogoutUserFailure: (state,action)=>{

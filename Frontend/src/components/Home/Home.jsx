@@ -2,8 +2,17 @@ import { Box, Container } from "@mui/system";
 import ItemCard from "../UI/Card";
 import classes from "./home.module.css";
 import { Typography } from "@mui/material";
+import {useEffect} from 'react'
+import {getCategories} from "../../actions/home"
+import { useDispatch } from "react-redux";
 
 const Home = () => {
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch(getCategories())
+  },[])
+
   return (
     <Box>
       <Box className={classes.homeHeader}>
