@@ -90,16 +90,16 @@ export const googleLogin = (tokenId,profile)=>async(dispatch)=>{
 export const loadSeller = ()=>async(dispatch)=>{
     try {
         dispatch({
-            type:"LoadSellerRequest"
+            type:"LoadUserRequest"
         })
         await axios.get("/api/verify-jwt/")
         dispatch({
-            type:"LoadSellerSuccess",
+            type:"LoadUserSuccess",
         })
     } catch (error) {
         console.log(error.response.data,error.response.status)
         dispatch({
-            type:"LoadSellerFailure",
+            type:"LoadUserFailure",
             payload:error.response.data.detail
         })
     }    
