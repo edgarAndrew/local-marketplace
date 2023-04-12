@@ -10,8 +10,11 @@ import {
 } from "@mui/icons-material";
 import { Typography, IconButton, Button } from "@mui/material";
 import { MenuContext } from "react-flexible-sliding-menu";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
+  const { loading, isAuthenticated } = useSelector((state) => state.user);
+
   const [tab, setTab] = useState(window.location.pathname);
   const { toggleMenu } = useContext(MenuContext);
 
@@ -59,13 +62,21 @@ const Sidebar = () => {
           )}
           <Typography variant="subtitle1">Profile</Typography>
         </NavLink>
-        <Button component={NavLink} to="/login">
-          login
-        </Button>
 
         <Button component={NavLink} to="/sell">
           Start Selling
         </Button>
+        {!isAuthenticated && (
+          <Button component={NavLink} to="/login">
+            login
+          </Button>
+        )}
+
+        {isAuthenticated && (
+          <Button component={NavLink} to="/">
+            logout
+          </Button>
+        )}
       </div>
 
       {/* logo */}
