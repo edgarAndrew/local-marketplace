@@ -12,6 +12,8 @@ import Home from "./components/Home/Home";
 import ProductPage from "./components/ProductPage/ProductPage";
 import Seller from "./components/Seller/Seller";
 import Profile from "./components/Profile/Profile";
+import Forms from "./components/Seller/Forms";
+import { Typography } from "@mui/material";
 
 function App() {
   const { loading, isAuthenticated } = useSelector((state) => state.user);
@@ -39,7 +41,15 @@ function App() {
               path="/sell"
               element={isAuthenticated ? <Seller /> : <Login />}
             />
+            <Route
+              path="/sell/form"
+              element={isAuthenticated ? <Forms /> : <Login />}
+            />
           </Route>
+          <Route
+            path="*"
+            element={<Typography variant="h1">Opps! 404 Not Found!</Typography>}
+          />
         </Routes>
       </StyledEngineProvider>
     </>

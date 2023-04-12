@@ -28,7 +28,7 @@ export default function ItemCard({ prod }) {
         <CardHeader
           avatar={
             prod.owner.profile_pic ? (
-              <Avatar src={`http://127.0.0.1:8000${prod.owner.profile_pic}`} />
+              <Avatar src={`http://192.168.103.120:8000${prod.owner.profile_pic}`} />
             ) : (
               <Avatar sx={{ bgcolor: yellow[400] }} aria-label="recipe">
                 R
@@ -40,7 +40,7 @@ export default function ItemCard({ prod }) {
         <CardMedia
           component="img"
           height="194"
-          image={`http://127.0.0.1:8000${prod.img}`}
+          image={`http://192.168.103.120:8000${prod.img}`}
           alt="Paella dish"
         />
         <CardContent>
