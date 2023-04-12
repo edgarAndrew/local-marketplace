@@ -1,8 +1,6 @@
 import {createReducer} from "@reduxjs/toolkit"
 
-const initialState = {
-    isAuthenticated:false,
-}
+const initialState = {}
 export const homeReducer = createReducer(initialState,{
     
     // dispatch types or cases for reducer
