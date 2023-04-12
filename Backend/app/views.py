@@ -1,6 +1,6 @@
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, DestroyAPIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
@@ -10,7 +10,6 @@ from base.utils import paginate
 from .serializers import *
 from .threads import *
 from .models import *
-from django.core.cache import cache
 
 
 class ContactUs(CreateAPIView):
@@ -52,3 +51,43 @@ class GetSingleProduct(RetrieveAPIView):
     serializer_class = ProductSerializer
     lookup_field = "id"
 
+
+class AddProductView(CreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = ProductModel.objects.all()
+    serializer_class = ProductSerializer
+
+
+@permission_classes([IsAuthenticated])
+@api_view(["POST"])
+def add_product_image(request, prod_id):
+    try:
+        user = UserModel.objects.get(email=request.user.email)
+        if not ProductModel.objects.filter(id=prod_id).exists():
+            return Response({"message": "Invalid Product ID"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        prod = ProductModel.objects.get(id=prod_id)
+        if prod.owner != user:
+            return Response({"message":"You dont have rights to edit this product details"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        ser = ProdImgSer(data=request.data)
+        ser.save(product=prod)
+        return Response({"message":"Inage Added"}, status=status.HTTP_202_ACCEPTED)
+    except Exception as e:
+        print(e)
+        return Response({"error":str(e), "message":"Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@permission_classes([IsAuthenticated])
+@api_view(["POST"])
+def delete_product_image(request, id):
+    try:
+        user = UserModel.objects.get(email=request.user.email)
+        if not ProductImagesModel.objects.filter(id=id).exists():
+            return Response({"message": "Invalid Product Image ID"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        prod_img = ProductImagesModel.objects.get(id=id)
+        if prod_img.product.owner != user:
+            return Response({"message":"You dont have rights to edit this product details"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        prod_img.delete()
+        return Response({"message": "Product Image Deleted"}, status=status.HTTP_200_OK)
+    except Exception as e:
+        print(e)

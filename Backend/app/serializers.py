@@ -1,3 +1,4 @@
+from authentication.serializers import CustomerNameSerializer
 from rest_framework import serializers
 from .models import *
 
@@ -15,15 +16,25 @@ class CategoriesSerializer(serializers.ModelSerializer):
 class ProductImagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImagesModel
-        fields = ["id", "img"]
+        fields = ["id", "image"]
+
+
+class ProdImgSer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImagesModel
+        fields = ["image"]
+
+
 
 class MultiProductSerializer(serializers.ModelSerializer):
+    owner = CustomerNameSerializer()
     class Meta:
         model = ProductModel
-        fields = ["title", "price", "img"]
+        fields = ["id", "title", "price", "img", "owner"]
 
 class ProductSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField()
+    owner = CustomerNameSerializer()
     class Meta:
         model = ProductModel
         exclude = ["updated_at"]
@@ -31,8 +42,15 @@ class ProductSerializer(serializers.ModelSerializer):
         images_array = []
         try:
             prod_obj = ProductModel.objects.get(id = obj.id)
-            serializer = ProductImagesSerializer(prod_obj.product_images.all(), many=True)
-            images_array = serializer.data
+            ser = ProductImagesSerializer(prod_obj.related_images.all(), many=True)
+            images_array = ser.data
+            print(images_array)
         except Exception as e:
             print(e)
         return images_array
+
+
+class AddProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductModel
+        exclude = ["created_at", "updated_at", "is_sold"]
