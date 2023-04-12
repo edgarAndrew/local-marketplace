@@ -1,3 +1,7 @@
 from django.db import models
+from base.models import BaseUser
 
-# Create your models here.
+
+class UserModel(BaseUser):
+    def __str__(self):
+        return self.name
