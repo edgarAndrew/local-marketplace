@@ -1,18 +1,16 @@
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.paginator import Paginator
+from django.db.models import Q
 from base.utils import paginate
 from .serializers import *
 from .threads import *
 from .models import *
 from django.core.cache import cache
-
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
 
 
 class ContactUs(CreateAPIView):
@@ -20,11 +18,37 @@ class ContactUs(CreateAPIView):
     serializer_class = ContactSerializer
 
 
+class GetCategories(ListAPIView):
+    queryset = CategoryModel.objects.all()
+    serializer_class = CategoriesSerializer
 
-@receiver(pre_save, sender=ContactUsModel)
-def send_email(sender, instance, *args, **kwargs):
+
+@api_view(["GET"])
+def get_products(request):
     try:
-        thread_obj = send_contact_email()
-        thread_obj.start()
+        queryset = ProductModel.objects.all().order_by("-created_at")
+        prod_name = request.query_params.get('search_product')
+        if not prod_name:
+            objs = queryset
+        else:
+            objs = ProductModel.objects.filter(
+                Q(title__icontains=prod_name) or 
+                Q(description__icontains=prod_name)
+            ).order_by("-created_at")
+        page = request.GET.get("page", 1)
+        paginator = Paginator(objs, 9)
+        data = paginate(objs, paginator, page)
+        ser = MultiProductSerializer(data["results"], many=True)
+        data["results"] = ser.data
+        ser = MultiProductSerializer(objs, many=True)
+        return Response(data, status=status.HTTP_200_OK)
     except Exception as e:
         print(e)
+        return Response({"error":str(e), "message":"Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class GetSingleProduct(RetrieveAPIView):
+    queryset = ProductModel.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = "id"
+

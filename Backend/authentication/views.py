@@ -57,6 +57,7 @@ def signUp(request):
         if serializer.is_valid():
             serializer.save()
             new_customer = UserModel.objects.get(email = serializer.validated_data["email"])
+            new_customer.auth_provider = "email"
             new_customer.set_password(serializer.validated_data["password"])
             new_customer.save()
             return Response({"message":"Account created"}, status=status.HTTP_201_CREATED)
