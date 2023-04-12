@@ -11,7 +11,7 @@ class ContactSerializer(serializers.ModelSerializer):
 class CategoriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryModel
-        fields = ["name", "img"]
+        fields = ["id", "name", "img"]
 
 class ProductImagesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,7 +23,6 @@ class ProdImgSer(serializers.ModelSerializer):
     class Meta:
         model = ProductImagesModel
         fields = ["image"]
-
 
 
 class MultiProductSerializer(serializers.ModelSerializer):
@@ -53,4 +52,4 @@ class ProductSerializer(serializers.ModelSerializer):
 class AddProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductModel
-        exclude = ["created_at", "updated_at", "is_sold"]
+        exclude = ["created_at", "updated_at", "is_sold", "owner"]

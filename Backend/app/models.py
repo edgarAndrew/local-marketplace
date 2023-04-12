@@ -13,6 +13,8 @@ TRANSMISSION = (("MANNUAL","MANNUAL"), ("AUTO","AUTO"))
 
 PROPERTIES = (("APPARTMENT","APPARTMENT"), ("BUNGLOW","BUNGLOW"), ("FARMHOUSE","FARMHOUSE"))
 
+LOCATIONS = (("MARGAO","MARGAO"), ("PANJIM","PANJIM"), ("VASCO","VASCO"),("MAPUSA","MAPUSA"), ("PONDA","PONDA"), ("VALPOI","VALPOI"))
+
 
 class ContactUsModel(BaseModel):
     name = models.CharField(max_length = 100)
@@ -38,8 +40,9 @@ class ProductModel(BaseModel):
     description = models.TextField()
     category = models.ForeignKey(CategoryModel, related_name="product_category", on_delete=models.CASCADE)
     price = models.PositiveIntegerField(default=0)
+    location = models.CharField(choices=LOCATIONS, default=LOCATIONS[0], max_length=50)
     img = models.ImageField(upload_to="product", height_field=None, width_field=None, max_length=None)
-    owner = models.ForeignKey(UserModel, related_name="product_owner", on_delete=models.CASCADE)
+    owner = models.ForeignKey(UserModel, related_name="product_owner", on_delete=models.CASCADE, null=True, blank=True)
     is_sold = models.BooleanField(default=False)
     brand = models.CharField(choices=BRAND, max_length=50, null=True, blank=True)
     date_of_purchase = models.DateField(auto_now=False, auto_now_add=False)
@@ -63,7 +66,6 @@ class ProductImagesModel(BaseModel):
     image = models.ImageField(upload_to="related_images", height_field=None, width_field=None, max_length=None)
     class Meta:
         db_table = 'product-images'
-
 
 
 @receiver(pre_save, sender=ContactUsModel)

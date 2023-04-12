@@ -150,12 +150,3 @@ def verify(request):
     except Exception as e:
         return Response({"error":str(e), "message":"Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@permission_classes([IsAuthenticated])
-@api_view(["GET"])
-def get_user_data(request):
-    try:
-        user = UserModel.objects.get(email=request.user.email)
-        ser = CustomerNameSerializer(user)
-        return Response(ser.data, status=status.HTTP_200_OK)
-    except Exception as e:
-        return Response({"error":str(e), "message":"Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
