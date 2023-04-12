@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     'authentication.apps.AuthenticationConfig',
     'app.apps.AppConfig',
-    'articles.apps.ArticlesConfig',
+    # 'articles.apps.ArticlesConfig',
 ]
 
 MIDDLEWARE = [
@@ -177,3 +177,6 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 GOOGLE_CLIENT_ID = str(config("GOOGLE_CLIENT_ID"))
 GOOGLE_CLIENT_SECRET = str(config("GOOGLE_CLIENT_SECRET"))
 SOCIAL_SECRET = str(config("SOCIAL_SECRET"))
+
+# Utils
+FRONTEND_URL = "http://localhost:5173"
