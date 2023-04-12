@@ -1,7 +1,7 @@
 import { Box, Container, Paper, Avatar,Button } from "@mui/material";
 import ItemCard from "../UI/Card";
 import classes from "./home.module.css";
-import { Typography, Backdrop, CircularProgress, Box, Container, Paper, Avatar } from "@mui/material";
+import { Typography, Backdrop, CircularProgress } from "@mui/material";
 import { useEffect } from "react";
 import { getCategories, getProducts,filter } from "../../actions/home";
 import { useDispatch, useSelector } from "react-redux";

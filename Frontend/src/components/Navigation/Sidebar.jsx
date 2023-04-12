@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import {logout} from '../../actions/user'
 import classes from "./sidebar.module.css";
 import { NavLink } from "react-router-dom";
+import logo from '../../assets/logo/twist.png'
 import {
   Home,
   HomeOutlined,
@@ -86,12 +87,11 @@ const Sidebar = () => {
 
       {/* logo */}
       <div className={classes.sidebar_logo}>
-        {/* <img
+        <img
           className={classes.sidebar_logo_img}
           src={logo}
-          alt="Fotokada Logo"
-        /> */}
-        logo
+          alt="Twist Logo"
+        />
       </div>
     </div>
   );

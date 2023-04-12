@@ -1,8 +1,13 @@
 import axios from "axios";
 
-export const developmentURL = "http://192.168.103.120:8000"
+const developmentURL = "http://192.168.103.120:8000"
+const testingURL = "http://127.0.0.1:8000"
 
-axios.defaults.baseURL = developmentURL
+export const currentURL = testingURL
+//export const currentURL = developmentURL
+axios.defaults.baseURL = currentURL
+
+
 axios.interceptors.request.use(function (req) {
     const user = localStorage.getItem('user');
     if (user) {

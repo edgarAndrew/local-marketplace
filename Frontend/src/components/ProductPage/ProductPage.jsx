@@ -26,12 +26,14 @@ const ProductPage = () => {
           <CircularProgress />
         </Backdrop>
       );
-    else if(product)
-        return(
+    else if(product){
+      const arr = [...product.images,product.img]
+      return(
         <Container className={classes.container}>
-            <HomeCarousel/>
-            <ProductData/>
+            <HomeCarousel images={arr}/>
+            <ProductData prod={product}/>
         </Container>
-    )
+      ) 
+  }
 }
 export default ProductPage;

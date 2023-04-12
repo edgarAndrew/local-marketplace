@@ -14,6 +14,10 @@ import Seller from "./components/Seller/Seller";
 import Profile from "./components/Profile/Profile";
 import Forms from "./components/Seller/Forms";
 import { Typography } from "@mui/material";
+import Vehicles from "./components/Seller/Vehicles";
+import Properties from "./components/Seller/Properties";
+import Furniture from "./components/Seller/Furniture";
+import Electronics from "./components/Seller/Electronics";
 
 function App() {
   const { loading, isAuthenticated } = useSelector((state) => state.user);
@@ -40,6 +44,22 @@ function App() {
             <Route
               path="/sell"
               element={isAuthenticated ? <Seller /> : <Login />}
+            />
+            <Route
+              path="/sell/Electronics"
+              element={isAuthenticated ? <Electronics /> : <Login />}
+            />
+            <Route
+              path="/sell/Properties"
+              element={isAuthenticated ? <Properties /> : <Login />}
+            />
+            <Route
+              path="/sell/Vehicles"
+              element={isAuthenticated ? <Vehicles /> : <Login />}
+            />
+            <Route
+              path="/sell/Furniture"
+              element={isAuthenticated ? <Furniture /> : <Login />}
             />
             <Route
               path="/sell/form"

@@ -13,12 +13,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { CardActionArea } from "@mui/material";
 import { useNavigate } from "react-router";
+import {currentURL} from '../../axios'
 
 export default function ItemCard({ prod }) {
   const navigate = useNavigate();
 
-  const cardClickHandler = (id) => {
-    console.log("card clicked");
+  const cardClickHandler = () => {
     navigate(`/product/${prod.id}`);
   };
 
@@ -28,7 +28,7 @@ export default function ItemCard({ prod }) {
         <CardHeader
           avatar={
             prod.owner.profile_pic ? (
-              <Avatar src={`http://192.168.103.120:8000${prod.owner.profile_pic}`} />
+              <Avatar src={`${currentURL}/${prod.owner.profile_pic}`} />
             ) : (
               <Avatar sx={{ bgcolor: yellow[400] }} aria-label="recipe">
                 R
@@ -40,7 +40,7 @@ export default function ItemCard({ prod }) {
         <CardMedia
           component="img"
           height="194"
-          image={`http://192.168.103.120:8000${prod.img}`}
+          image={`${currentURL}/${prod.img}`}
           alt="Paella dish"
         />
         <CardContent>

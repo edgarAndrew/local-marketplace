@@ -23,17 +23,17 @@ const Seller = () => {
 
         <Box className={classes.categories}>
           {categories.map((cat) => (
-            <Paper
-              elevation={0}
-              variant="outlined"
-              className={classes.catCard}
-              component={Link}
-              to="form"
-              state={{ category: cat.id, categoryName: cat.name }}
-            >
-              <Avatar alt="Remy Sharp" src={cat.img} variant="sqaure" />
-              <Typography>{cat.name}</Typography>
-            </Paper>
+              <Paper
+                elevation={0}
+                variant="outlined"
+                className={classes.catCard}
+                component={Link}
+                to={`${cat.name}`}
+                state={{ category: cat.id, categoryName: cat.name }}
+              >
+                <Avatar alt="Remy Sharp" src={cat.img} variant="sqaure" />
+                <Typography>{cat.name}</Typography>
+              </Paper>
           ))}
         </Box>
       </Container>

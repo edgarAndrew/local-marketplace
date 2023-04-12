@@ -11,7 +11,7 @@ import Select from "@mui/material/Select";
 const Forms = () => {
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    console.log("form submit handler");
+    console.log(e);
   };
 
   const { state: catData } = useLocation();
@@ -31,7 +31,7 @@ const Forms = () => {
       <Typography variant="h5" fontWeight={600} sx={{ paddingTop: "1rem" }}>
         Fill the product details
       </Typography>
-      <Box component="form" className={classes.formBox}>
+      <Box component="form" className={classes.formBox} onSubmit={formSubmitHandler}>
         <Stack spacing={4}>
           <TextField id="Title" label="Title" variant="outlined" required />
           <TextField
@@ -64,7 +64,7 @@ const Forms = () => {
                 label="Transmission Type"
                 onChange={handleChange}
               >
-                <MenuItem value="Mannual">Mannual</MenuItem>
+                <MenuItem value="Mannual">Manual</MenuItem>
                 <MenuItem value="Auto">Auto</MenuItem>
               </Select>
             </FormControl>
